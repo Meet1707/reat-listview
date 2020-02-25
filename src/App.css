@@ -36,3 +36,19 @@
     transform: rotate(360deg);
   }
 }
+.listGrp {
+  width: 500px;
+}
+
+.content {
+  display: flex;
+  margin: 50px;
+}
+.buttons {
+  display: flex;
+  flex-direction: column;
+  margin: 50px;
+}
+button{
+  margin-bottom: 10px !important;
+}
