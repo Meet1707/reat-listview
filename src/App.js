@@ -35,7 +35,7 @@ class App extends Component {
     let list = this.state.list;
     copyData.forEach((item) => {
       if (listTwo.includes(item.name) && list.includes(item)){
-        list.pop(item);
+
         item.show=true;
       }
     })
