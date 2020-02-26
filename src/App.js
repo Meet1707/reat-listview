@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import CheckBoxOne, {CheckBoxTwo} from './checkBox';
+import CheckBoxOne, { CheckBoxTwo } from './checkBox';
 import { Button } from 'react-bootstrap';
+
 class App extends Component {
   state = {
     data: [{ name: "1: Ramsay Bolton", show: true },
@@ -13,67 +14,74 @@ class App extends Component {
     listOne: [],
     listTwo: []
   }
+
   add = () => {
-    const listOne = this.state.listOne;
-    let copyData = [...this.state.data];
-    let list = this.state.list;
-    copyData.forEach((item) => {
+    const { listOne, data, list } = this.state;
+
+    data.forEach(item => {
       if (listOne.includes(item.name) && !list.includes(item)) {
         list.push(item);
-        item.show=false
+        item.show = false;
       }
     })
-    this.setState({
-      data: copyData,
-      listOne: [],
-      listTwo: []
-    })
-  }
-  delete = () => {
-    const listTwo = [...this.state.listTwo]
-    let copyData = [...this.state.data];
-    let list = this.state.list;
-    copyData.forEach((item) => {
-      if (listTwo.includes(item.name) && list.includes(item)){
 
-        item.show=true;
-      }
-    })
     this.setState({
-      data: copyData,
+      data,
       listOne: [],
       listTwo: [],
-      list: list
+      list
+    });
+  }
+
+  delete = () => {
+    let { listTwo, data, list } = this.state;
+
+    data.forEach(item => {
+      if (listTwo.includes(item.name) && list.includes(item)) {
+        list = list.filter(element => element !== item);
+        item.show = true;
+      }
+    });
+
+    this.setState({
+      data,
+      listOne: [],
+      listTwo: [],
+      list
     })
   }
+
   handleListOne = (event) => {
     const { listOne } = this.state;
-    let index;
-    console.log(event.target.name)
-    if (event.target.checked)
-      listOne.push(event.target.name)
+    const { name, checked } = event.target;
+
+    if (checked)
+      listOne.push(name);
     else {
-      index = listOne.indexOf(event.target.name)
-      listOne.splice(index, 1)
+      let index = listOne.indexOf(name);
+      listOne.splice(index, 1);
     }
-    this.setState({ listOne: listOne })
+    this.setState({ listOne });
   }
+
   handleListTwo = (event) => {
     const { listTwo } = this.state;
-    let index;
+
     if (event.target.checked)
-      listTwo.push(event.target.name)
+      listTwo.push(event.target.name);
     else {
-      index = listTwo.indexOf(event.target.name)
-      listTwo.splice(index, 1)
+      let index = listTwo.indexOf(event.target.name);
+      listTwo.splice(index, 1);
     }
-    this.setState({ listTwo: listTwo })
+    this.setState({ listTwo });
   }
+
   rotate = () => {
     const { listTwo, list } = this.state;
     let index = list.map(data => {
-      return data.name
+      return data.name;
     }).indexOf(listTwo[0]);
+
     if (!index) {
       let item = list.shift();
       list.push(item);
@@ -83,10 +91,12 @@ class App extends Component {
       list.splice(index - 1, 0, item[0]);
       list.join();
     }
-    this.setState({ list })
+    this.setState({ list });
   }
+
   render() {
     const { listOne, listTwo, data, list } = this.state;
+
     return (
       <div className="content">
         <div>
@@ -98,9 +108,16 @@ class App extends Component {
           />
         </div>
         <div className="buttons">
-          <Button disabled={listTwo.length !== 1} variant="warning" onClick={() => this.rotate()}>UP</Button>
-          <Button variant="info" onClick={this.add} >Add</Button>
-          <Button variant="info" onClick={this.delete}>Delete</Button>
+          <Button disabled={listTwo.length !== 1} variant="warning"
+            onClick={this.rotate}>
+            UP
+          </Button>
+          <Button variant="info" onClick={this.add} >
+            Add
+          </Button>
+          <Button variant="info" onClick={this.delete}>
+            Delete
+          </Button>
         </div>
         <div>
           <h3>List 2</h3>
@@ -113,4 +130,6 @@ class App extends Component {
       </div>)
   }
 }
+
+
 export default App;
