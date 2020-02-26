@@ -8,7 +8,7 @@ const CheckBoxOne = (props) => {
       <ListGroup className="listGrp">
         {props.data.map((check, index) => {
           if (check.show)
-            return <ListGroup.Item>
+            return <ListGroup.Item key={index}>
               <Form.Check
                 key={index}
                 id={check.name + "-"}
@@ -29,7 +29,7 @@ export const CheckBoxTwo = (props) => {
       <ListGroup className="listGrp">
         {props.data.map((check, index) => {
           if (!check.show)
-            return <ListGroup.Item>
+            return <ListGroup.Item key={index}>
               <Form.Check
                 key={index}
                 id={check.name}
